@@ -114,6 +114,7 @@ $('exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(data,null,2)],{t
 $('importBtn').onclick=()=>$('importFile').click();$('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const parsed=JSON.parse(await f.text());if(!parsed.character||typeof parsed.gold!=='number')throw Error();data=parsed;save();toast('Save imported')}catch(err){toast('That save file is not valid')}e.target.value=''};
 try{const raw=localStorage.getItem('realmsUnboundSave');if(raw){const parsed=JSON.parse(raw);if(parsed&&parsed.character&&typeof parsed.gold==='number')data=parsed}}catch(e){}
 ensureRealm();
+if(data.character.calling.toLowerCase()==='noble'&&!data.realm.kingdomName){data.realm.kingdomName='House '+(data.character.name.split(' ')[0]||'Wanderer');data.gold=Math.max(data.gold,500);data.realm.territories=['Eldoria'];}
 render();
 </script>
 <script>
